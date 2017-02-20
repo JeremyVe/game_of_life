@@ -1,19 +1,23 @@
-<h1>GAME OF LIFE</h1>
+<h1>Game Of Life</h1>
 
-<div class="pattern-container" id='patterns'>
-  <div class='pattern' data-pattern='glider'>
-    Glider
+<div class='actions'>
+  <div class="pattern-container" id='patterns'>
+    <div class='pattern' data-pattern='glider'>
+      Glider
+    </div>
+
+    <div class='pattern' data-pattern='square'>
+      Square
+    </div>
+
+    <div class='pattern' data-pattern='pentadecathlon'>
+      Pentadecathlon
+    </div>
   </div>
 
-  <div class='pattern' data-pattern='square'>
-    Square
-  </div>
-
-  <div class='pattern' data-pattern='pentadecathlon'>
-    Pentadecathlon
+  <div id='color'>
+    <span class='subtitle'>Change</span>
   </div>
 </div>
-<div id='color'>
-  <span class='subtitle'>Change</span>
-</div>
-<canvas style='margin: 50px auto; display:block;' id="game" width="600" height="400"></canvas>
+
+<canvas id="game" width="600" height="400"></canvas>

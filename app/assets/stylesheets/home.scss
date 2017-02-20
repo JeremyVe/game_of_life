@@ -2,31 +2,38 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
-  font-family: Avenir
+  font-family: Avenir, sans-serif;
+  margin: 0;
 }
 
 h1 {
   text-align: center;
+  font-weight: 100;
+  color: #333;
 }
 
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .pattern-container {
   display: flex;
   justify-content: center;
 
   .pattern {
     margin: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
   }
 
   .pattern:hover {
     border-bottom: 1px solid Steelblue;
+    transform: scale(1.2);
   }
 }
 
-#game {
-  box-shadow: 0 2px 5px rgba(0,0,0, 0.5);
-}
 #color {
-  margin: 10px auto 0;
   width: 80px;
   height: 80px;
   box-shadow: 0 2px 5px rgba(0,0,0, 0.5);
@@ -35,6 +42,7 @@ h1 {
   line-height: 80px;
   text-align: center;
   cursor: pointer;
+
   .subtitle {
     color: white;
     opacity: 0;
@@ -48,4 +56,10 @@ h1 {
   .subtitle {
     opacity: 1;
   }
+}
+
+#game {
+  margin: 50px auto;
+  display: block;
+  box-shadow: 0 2px 5px rgba(0,0,0, 0.5);
 }

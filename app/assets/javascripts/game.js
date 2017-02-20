@@ -2,16 +2,15 @@ var Game = (function() {
   var instance;
 
   function instantiateGame() {
-    var cell = Cell()
-    var board = Board(cell);
-    return {board: board};
+    var game = GameOfLife();
+    return game;
   }
 
   return {
     getInstance: function() {
       if (!instance) {
         instance = instantiateGame();
-        instance.board.init();
+        instance.init();
       }
       return instance;
     }
