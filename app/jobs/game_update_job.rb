@@ -3,6 +3,6 @@ class GameUpdateJob
   workers 4
 
   def perform
-    Life.update_cells
+    Life.update_board
   end
 end
