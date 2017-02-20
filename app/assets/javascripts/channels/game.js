@@ -9,8 +9,8 @@ App.game = App.cable.subscriptions.create("GameChannel", {
     // Called when there's incoming data on the websocket for this channel
     var game = Game.getInstance();
     game.board.resetBoard();
-    game.board.printBoard();
     game.board.printCells(data);
+    game.board.printBoard();
   },
   action: function(cells) {
     this.perform('action', {cells: cells})

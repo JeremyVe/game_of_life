@@ -1,9 +1,9 @@
-function Board(cellFactory) {
-  var liveCells = {};
+function Board() {
+  //var liveCells = {};
   var patterns = {
                   'glider': [[0, -1], [1, 0], [1, 1], [0, 1], [-1, 1]],
                   'square': [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]],
-                  'other': []
+                  'pentadecathlon': [[0, -5], [0, -4], [-1, -3], [1, -3], [0, -2], [0, -1], [0, 0], [0, 1], [-1, 2], [1, 2], [0, 3], [0, 4]]
                 }
   var canvas;
   var ctx;
@@ -13,7 +13,8 @@ function Board(cellFactory) {
   var rows = height/cellSize;
   var cols = width/cellSize;
   var color;
-  var id = Math.random();
+  var colorContainer;
+  //var id = Math.random();
 
   var service = {};
 
@@ -24,14 +25,15 @@ function Board(cellFactory) {
         var cell = col[j];
         ctx.fillStyle = 'rgb(' + cell.color[0] + ', ' + cell.color[1] + ', ' + cell.color[2] + ')';
         ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize)
+        //ctx.stroke()
       }
     }
   }
 
 
-  var updateBoard = function() {
-    return cellFactory.updateCells(liveCells);
-  }
+  // var updateBoard = function() {
+  //   return cellFactory.updateCells(liveCells);
+  // }
 
 
   service.printBoard = function() {
@@ -57,6 +59,16 @@ function Board(cellFactory) {
     canvas.addEventListener('click', createCell);
     var patternsContainer = document.getElementById('patterns');
     patternsContainer.addEventListener('click', createPattern);
+
+    colorContainer.addEventListener('click', changeColor);
+
+  }
+
+
+  var changeColor = function() {
+    color = getRandomColor();
+    colorContainer.style.background = 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')';
+    return color;
   }
 
 
@@ -77,27 +89,27 @@ function Board(cellFactory) {
     App.game.action([newCell]);
   }
 
-  var checkCreatorIsUser = function(data) {
-    if (id === data.id) {
-      return;
-    }
-  }
+  // var checkCreatorIsUser = function(data) {
+  //   if (id === data.id) {
+  //     return;
+  //   }
+  // }
 
 
-  service.createSyncCell = function(data) {
-    checkCreatorIsUser(data);
-
-    var x = data.x;
-    var y = data.y;
-    var newCell = new CellObject(x, y, data.color);
-    if (liveCells[x]) {
-      liveCells[x][y] = newCell;
-    } else {
-      liveCells[x] = {};
-      liveCells[x][y] = newCell;
-    }
-    printUniqCell(newCell);
-  }
+  // service.createSyncCell = function(data) {
+  //   //checkCreatorIsUser(data);
+  //
+  //   var x = data.x;
+  //   var y = data.y;
+  //   var newCell = new CellObject(x, y, data.color);
+  //   if (liveCells[x]) {
+  //     liveCells[x][y] = newCell;
+  //   } else {
+  //     liveCells[x] = {};
+  //     liveCells[x][y] = newCell;
+  //   }
+  //   printUniqCell(newCell);
+  // }
 
 
   var createPattern = function(event) {
@@ -125,30 +137,31 @@ function Board(cellFactory) {
   }
 
 
-  service.createSyncPattern = function(data) {
-    checkCreatorIsUser(data);
-
-    var pattern = patterns[data.name];
-    for (var i = 0; i < pattern.length; i++) {
-      var coord = pattern[i];
-      var x = data.x + coord[0];
-      var y = data.y + coord[1];
-      var newCell = new CellObject(x, y, data.color);
-      if (liveCells[x]) {
-        liveCells[x][y] = newCell;
-      } else {
-        liveCells[x] = {};
-        liveCells[x][y] = newCell;
-      }
-      printUniqCell(newCell);
-    }
-  }
+  // service.createSyncPattern = function(data) {
+  //   checkCreatorIsUser(data);
+  //
+  //   var pattern = patterns[data.name];
+  //   for (var i = 0; i < pattern.length; i++) {
+  //     var coord = pattern[i];
+  //     var x = data.x + coord[0];
+  //     var y = data.y + coord[1];
+  //     var newCell = new CellObject(x, y, data.color);
+  //     if (liveCells[x]) {
+  //       liveCells[x][y] = newCell;
+  //     } else {
+  //       liveCells[x] = {};
+  //       liveCells[x][y] = newCell;
+  //     }
+  //     printUniqCell(newCell);
+  //   }
+  // }
 
 
   var printUniqCell = function(cell) {
     var color = 'rgb(' + cell.color[0] + ', ' + cell.color[1] + ', ' + cell.color[2] + ')';
     ctx.fillStyle = color;
     ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize);
+    //ctx.stroke()
   }
 
 
@@ -157,10 +170,12 @@ function Board(cellFactory) {
   }
 
 
-   service.init = function() {
-    color = getRandomColor();
+  service.init = function() {
     canvas = document.getElementById('game');
     ctx = canvas.getContext('2d');
+    colorContainer = document.getElementById('color');
+    color = changeColor();
+
     addClickListeners();
     service.printBoard();
   //   printCells();

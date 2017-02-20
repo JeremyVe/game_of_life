@@ -1,1 +1,1 @@
-Board.perform_in(1)
+GameUpdateJob.perform_in(1)
