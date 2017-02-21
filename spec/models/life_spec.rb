@@ -1,6 +1,42 @@
 require 'rails_helper'
 
 describe Life do
+  context '#add_user_cells' do
+    it 'should add a user cell to the cells board' do
+      $redis.set('cells', {})
+
+      user_cells = [{'x'=> 3, 'y'=>5, 'color'=>[2,3,4]}]
+      Life.add_user_cells user_cells
+
+      expectation = {'3'=> {'5'=> [2,3,4]}}.to_json
+      expect($redis.get('cells')).to eq(expectation)
+    end
+
+    it 'should add a user pattern to the cells board' do
+      $redis.set('cells', {})
+
+      user_cells = [{'x'=> 3, 'y'=>5, 'color'=>[2,3,4]},
+                    {'x'=> 3, 'y'=>6, 'color'=>[2,3,4]},
+                    {'x'=> 3, 'y'=>7, 'color'=>[2,3,4]}]
+      Life.add_user_cells user_cells
+
+      expectation = {'3'=> {'5'=> [2,3,4], '6'=> [2,3,4], '7'=> [2,3,4]}}.to_json
+      expect($redis.get('cells')).to eq(expectation)
+    end
+
+    it 'should override a cell with the new cell' do
+      board_cells = {'3'=> {'5'=> [2,3,4]}}.to_json
+      $redis.set('cells', board_cells)
+
+      user_cells = [{'x'=> 3, 'y'=>5, 'color'=>[10,11,12]}]
+      Life.add_user_cells user_cells
+
+      expectation = {'3'=> {'5'=> [10,11,12]}}.to_json
+      expect($redis.get('cells')).to eq(expectation)
+    end
+
+  end
+
   context '#create_cell' do
     cell = {'x'=>5, 'y'=>4, 'color'=>[2,3,4]}
     result = Life.send(:create_cell, cell)

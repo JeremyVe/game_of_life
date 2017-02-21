@@ -1,5 +1,15 @@
 class Life
 
+  def self.add_user_cells cells
+    board = JSON.parse( $redis.get('cells') )
+    cells.each do |cell|
+      board[cell['x'].to_s] = board[cell['x'].to_s] || {}
+      board[cell['x'].to_s][cell['y'].to_s] = cell['color']
+    end
+
+    $redis.set('cells', board.to_json )
+  end
+
   def self.update_board
     cells = get_current_board
     updated_cells = update_cells( cells )
