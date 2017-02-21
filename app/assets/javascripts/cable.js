@@ -8,6 +8,6 @@
 (function() {
   this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer("<%= Rails.application.config.web_socket_server_url %>");
+  App.cable = ActionCable.createConsumer();
 
 }).call(this);
