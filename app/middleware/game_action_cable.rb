@@ -1,4 +1,4 @@
-class GameActionCable < ActionCable::Connection::Base
+class GameActionCable < ActionCable::Connection::WebSocket
   def initialize(app, options={})
     @app = app
   end
