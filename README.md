@@ -6,7 +6,7 @@ Multiplayer version of the game of life, using Websockets with ActionCable
 </p>
 
 You can check the live version of the game here :
-<a href='http://young-refuge-98238.herokuapp.com/'>Live version</a>
+<a href='http://young-refuge-98238.herokuapp.com/' target="_blank">Live version</a>
 
 
 ####To build on your computer : 
