@@ -1,5 +1,9 @@
 # Game of Life
-### Multiplayer version of the game of life, using Websockets with ActionCable
+Multiplayer version of the game of life, using Websockets with ActionCable
+
+<p align="center">
+    <img src="game of life.png" />
+</p>
 
 You can check the live version of the game here :
 <a href='http://young-refuge-98238.herokuapp.com/'>Live version</a>
