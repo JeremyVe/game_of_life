@@ -85,5 +85,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.middleware.use GameActionCable
-  config.web_socket_server_url = "wss://young-refuge-98238.herokuapp.com/" 
+  config.web_socket_server_url = "wss://young-refuge-98238.herokuapp.com/"
 end

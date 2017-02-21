@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
-#gem 'pg', '~> 0.18'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -34,6 +34,10 @@ gem 'redis-namespace'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'sucker_punch', '~> 2.0'
 
+group :production do
+  gem 'pg', '~> 0.18'
+end
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :test do
@@ -41,6 +45,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
