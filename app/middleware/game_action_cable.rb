@@ -1,4 +1,4 @@
-class GameActionCable
+class GameActionCable < ActionCable
   def initialize(app, options={})
     @app = app
   end
