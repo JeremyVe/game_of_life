@@ -1,24 +1,34 @@
-# README
+# Game of Life
+### Multiplayer version of the game of life, using Websockets with ActionCable
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+You can check the live version of the game here :
+<a href='http://young-refuge-98238.herokuapp.com/'>Live version</a>
 
-Things you may want to cover:
 
-* Ruby version
+To build it on your computer : 
 
-* System dependencies
+You need Rails 5, and Redis :
 
-* Configuration
+If Redis is not installed :
+  brew install redis
+  
+If Rails is not installed :
+  sudo gem install rails
 
-* Database creation
+Ruby >= 2.2.2 : 
+  \curl -L https://get.rvm.io | bash -s stable –ruby
+  rvm install ruby-2.3.0
+  rvm use ruby-2.3.0
 
-* Database initialization
+Then :
 
-* How to run the test suite
+git clone https://github.com/JeremyVe/game_of_life.git
+cd game_of_life
+bundle install
+  
+redis-server
+rails s
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+visit : http://localhost:3000
+  
+ 
