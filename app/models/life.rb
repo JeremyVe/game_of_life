@@ -2,7 +2,6 @@ class Life
 
   def self.update_board
     cells = get_current_board
-
     updated_cells = update_cells( cells )
 
     $redis.set('cells', updated_cells.to_json)
@@ -22,7 +21,6 @@ private
       'updated_cells' => {},
       'neighbor_cells' => {},
     }
-
     life = calculate_next_state( cells, life )
     life = reborn_neighbors( life )
 
@@ -45,7 +43,7 @@ private
       col.each do |y, neighbor|
         if (neighbor['count'] === 3)
           color = get_new_color( neighbor['colors'] )
-          cell =  create_cell( x, y, color )
+          cell =  create_cell( {'x'=>x, 'y'=>y, 'color'=>color} )
           life['updated_cells'] = add_cell( cell, life['updated_cells'] )
         end
       end
@@ -54,34 +52,42 @@ private
   end
 
 
-  def self.create_cell( x, y, color )
-    return {'x' => x.to_s, 'y' => y.to_s, 'color' => color}
+  def self.calculate_cell( cell, cells, neighbor_cells )
+    # check surounding
+    living_neighbors_count = calculate_neighbors( cell, cells, neighbor_cells )
+    return next_cell_state( living_neighbors_count )
+  end
+
+
+  def self.create_cell( cell )
+    return {'x' => cell['x'].to_s, 'y' => cell['y'].to_s, 'color' => cell['color']}
   end
 
 
   def self.calculate_neighbors( cell, cells, neighbors )
     x = cell['x'].to_i
     y = cell['y'].to_i
-
     color = cell['color']
     width = 60
     height = 40
+
     neighbor_patterns = [[x-1, y-1], [x, y-1], [x+1, y-1], [x-1, y], [x+1, y], [x-1, y+1], [x, y+1], [x+1, y+1]]
     living_neighbors_count = 0
+
     neighbor_patterns.each do |neighbor|
       nX = neighbor[0]
       nY = neighbor[1]
-      # skip to next neighbor if the current doesn't exist
+      # skip to next neighbor if the current position is outside the canvas
       if ( nX < 0 || nX > width || nY < 0 || nY > height )
         next
       end
 
-      # living neighbor
       nX = nX.to_s
       nY = nY.to_s
-
+      # living neighbor : add +1 to the count
       if (cells.key?(nX) && cells[nX].key?( nY ))
         living_neighbors_count += 1
+      # dead neighbor : add to the neighbor list, with neighbors count and color
       else
         if (neighbors.key?( nX ))
           if (neighbors[nX].key?( nY ))
@@ -138,13 +144,6 @@ private
     color[2] = (color[2] / 3).round
 
     return color
-  end
-
-
-  def self.calculate_cell( cell, cells, neighbor_cells )
-    # check surounding
-    living_neighbors_count = calculate_neighbors( cell, cells, neighbor_cells )
-    return next_cell_state( living_neighbors_count )
   end
 
 end
