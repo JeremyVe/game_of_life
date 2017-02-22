@@ -3,7 +3,6 @@ class GameHandler
   @@players = Players.new
   @@board = Board.new
   @@cells = Cells.new
-
   
 
 
