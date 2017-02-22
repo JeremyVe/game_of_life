@@ -1,0 +1,100 @@
+/* line 4, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+body {
+  font-family: Avenir, sans-serif;
+  margin: 0;
+  perspective: 150px;
+}
+
+/* line 10, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+h1 {
+  text-align: center;
+  font-weight: 100;
+  color: #333;
+}
+
+/* line 16, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+.actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* line 21, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+.pattern-container {
+  display: flex;
+  justify-content: center;
+}
+/* line 25, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+.pattern-container .pattern {
+  margin: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+/* line 31, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+.pattern-container .pattern:hover {
+  border-bottom: 1px solid Steelblue;
+  transform: scale(1.2);
+}
+
+/* line 37, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#players {
+  font-size: 14px;
+  transition: transform 0.3s;
+}
+
+/* line 42, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+.player-count-change {
+  transform: scale(2);
+}
+
+/* line 46, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#color {
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  transition: all 0.3s;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+}
+/* line 56, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#color .subtitle {
+  font-size: 12px;
+  color: white;
+  opacity: 0;
+}
+
+/* line 63, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#color:hover {
+  transform: scale(1.5);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+/* line 67, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#color:hover .subtitle {
+  opacity: 1;
+}
+
+/* line 72, /Users/always/Vikings/game_of_life/gol/game_of_life/app/assets/stylesheets/home.scss */
+#game {
+  margin: 50px auto;
+  display: block;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transform: scale(1.2) rotateX(10deg);
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+
