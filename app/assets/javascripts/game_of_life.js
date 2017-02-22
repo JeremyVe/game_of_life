@@ -11,6 +11,7 @@ function GameOfLife() {
     el: undefined,
     ctx: undefined,
     colorContainer: undefined,
+    playersCountEl: undefined,
     width: 600,
     height: 400,
     cellSize: 10,
@@ -22,7 +23,24 @@ function GameOfLife() {
   var service = {};
 
 
-  service.printCells = function(cells) {
+  service.updateBoard = function(cells) {
+    resetBoard();
+    printCells(cells);
+    // printGrid()
+  }
+
+  service.changePlayersCount = function(count) {
+    var playerString = count + ' Player'
+    playerString += count > 1 ? 's' : ''
+    canvas.playersCountEl.innerHTML = playerString;
+    canvas.playersCountEl.classList.add('player-count-change')
+    setTimeout(function() {
+      canvas.playersCountEl.classList.remove('player-count-change')
+    }, 300)
+  }
+
+
+  var printCells = function(cells) {
     for (var i in cells) {
       var col = cells[i];
       for (var j in col) {
@@ -33,7 +51,7 @@ function GameOfLife() {
   }
 
 
-  service.printGrid = function() {
+  var printGrid = function() {
     canvas.ctx.strokeStyle = 'rgb(200,200,200)';
     // columns
     for (var x = 0; x <= canvas.cols; x++) {
@@ -49,7 +67,7 @@ function GameOfLife() {
   }
 
 
-  service.resetBoard = function() {
+  var resetBoard = function() {
     canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -120,6 +138,7 @@ function GameOfLife() {
     canvas.el = document.getElementById('game');
     canvas.ctx = canvas.el.getContext('2d');
     canvas.colorContainer = document.getElementById('color');
+    canvas.playersCountEl = document.getElementById('players');
     changeColor();
 
     addClickListeners();

@@ -1,32 +1,23 @@
-class Life
+class Cells
 
-  def self.add_user_cells cells
-    board = JSON.parse( $redis.get('cells') )
-    cells.each do |cell|
-      board[cell['x'].to_s] = board[cell['x'].to_s] || {}
-      board[cell['x'].to_s][cell['y'].to_s] = cell['color']
-    end
-
-    $redis.set('cells', board.to_json )
+  def initialize
+    @board = Board.new
   end
+  
 
-  def self.update_board
-    cells = get_current_board
+  def update
+    cells = @board.get
     updated_cells = update_cells( cells )
 
-    $redis.set('cells', updated_cells.to_json)
-    ActionCable.server.broadcast 'game_channel', updated_cells
-    GameUpdateJob.perform_in( 1 )
+    @board.update( updated_cells )
+
+    ActionCable.server.broadcast 'game_channel', {'action'=> 'update', 'cells'=> updated_cells}
   end
 
 private
 
-  def self.get_current_board
-    return JSON.parse($redis.get( 'cells' ))
-  end
 
-
-  def self.update_cells( cells )
+  def update_cells( cells )
     life = {
       'updated_cells' => {},
       'neighbor_cells' => {},
@@ -37,7 +28,7 @@ private
     return life['updated_cells']
   end
 
-  def self.calculate_next_state( cells, life )
+  def calculate_next_state( cells, life )
     cells.each do |x, col|
       col.each do |y, cell|
         current_cell = {'x' => x, 'y' => y, 'color' => cell}
@@ -48,7 +39,7 @@ private
     return life
   end
 
-  def self.reborn_neighbors( life )
+  def reborn_neighbors( life )
     life['neighbor_cells'].each do |x, col|
       col.each do |y, neighbor|
         if (neighbor['count'] === 3)
@@ -62,19 +53,19 @@ private
   end
 
 
-  def self.calculate_cell( cell, cells, neighbor_cells )
+  def calculate_cell( cell, cells, neighbor_cells )
     # check surounding
     living_neighbors_count = calculate_neighbors( cell, cells, neighbor_cells )
     return next_cell_state( living_neighbors_count )
   end
 
 
-  def self.create_cell( cell )
+  def create_cell( cell )
     return {'x' => cell['x'].to_s, 'y' => cell['y'].to_s, 'color' => cell['color']}
   end
 
 
-  def self.calculate_neighbors( cell, cells, neighbors )
+  def calculate_neighbors( cell, cells, neighbors )
     x = cell['x'].to_i
     y = cell['y'].to_i
     color = cell['color']
@@ -116,7 +107,7 @@ private
   end
 
 
-  def self.next_cell_state living_neighbors_count
+  def next_cell_state living_neighbors_count
 
       if ( living_neighbors_count < 2 )
         return false # dead
@@ -128,7 +119,7 @@ private
   end
 
 
-  def self.add_cell( cell, cells, living = true )
+  def add_cell( cell, cells, living = true )
     if (living)
       if (cells.key?(cell['x']))
         cells[cell['x']][cell['y']] = cell['color']
@@ -141,7 +132,7 @@ private
   end
 
 
-  def self.get_new_color( colors )
+  def get_new_color( colors )
     color = [0,0,0]
 
     colors.each do |colorArray|

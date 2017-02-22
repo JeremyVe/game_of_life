@@ -32,7 +32,8 @@ gem 'redis', '~> 3.0'
 gem 'redis-namespace'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'sucker_punch', '~> 2.0'
+# background job handler
+# gem 'sucker_punch', '~> 2.0'
 
 group :production do
   gem 'pg', '~> 0.18'
